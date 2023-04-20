@@ -19,3 +19,6 @@ fastcgi_param  REMOTE_PORT        $remote_port;
 fastcgi_param  SERVER_ADDR        $server_addr;
 fastcgi_param  SERVER_PORT        $server_port;
 fastcgi_param  SERVER_NAME        $server_name;
+
+# DOCKER REQUIRES THIS LINE TO PASS THE FILENAME ON TO THE NEXT CONTAINER
+fastcgi_param SCRIPT_FILENAME     $realpath_root$fastcgi_script_name;

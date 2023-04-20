@@ -1,0 +1,9 @@
+# send these errors to this file
+error_page 404 403 500 503 /error-page.html;
+
+location = /error-page.html {
+		# locate this file here
+        root /srv/www;
+		# do not allow external requests to this file
+        internal;
+}
