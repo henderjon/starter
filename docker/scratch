@@ -1,14 +1,11 @@
 # SCRATCH
 
 - https://docs.docker.com/engine/reference/builder/
-- https://www.fosstechnix.com/dockerfile-instructions/#what-is-difference-between-dockerfile-add-vs-copy
 
 ALPINE
 --------------------------------------------------------------------------------
 
 Alpine Linux uses "apk" as a package manager
-
-- RUN apk add --no-cache nginx
 
 GOLANG via Makefile
 --------------------------------------------------------------------------------
@@ -16,7 +13,7 @@ GOLANG via Makefile
 $ make cgo
 
 - cgo runs 'docker-cgo' that runs a docker image "golang:latest" that invokes 'make linux64-cgo' to compile the linux cgo on mac (as mac doesn't cross compile with cgo very well)
-- once compiled in a linux docker image, 'make cgo copies the binary to ssh:path/in/the/cloud'
+- once compiled in a linux docker image, 'make cgo' echoes the command to copy the binary to ssh:path/in/the/cloud'
 
 ```make
 # CGO
@@ -26,9 +23,27 @@ linux64-cgo:
 
 .PHONY: docker-cgo
 docker-cgo: clean
-    docker run --rm -v "$(PWD)":/usr/src/myapp -w /usr/src/myapp golang:latest make linux64-cgo
+    # bind mount $PWD to /usr/local/src; set the working dir to /usr/local/src; run make linux64-cgo
+    docker run --rm --volume "$(PWD)":/usr/local/src --workdir /usr/local/src golang:latest make linux64-cgo
 
 .PHONY: cgo
 cgo: docker-cgo
     $(info scp "$(BINS)/$(BIN)-linux64-cgo-$(HEAD)" "mymix:$(DEPLOYMENT_PATH)")
 ```
+
+PREFERRED DIRS W/I CONTAINER
+--------------------------------------------------------------------------------
+
+source code to compile: $HOME
+php files/application: /srv/www
+single binary applications: /opt
+
+VOLUMES
+--------------------------------------------------------------------------------
+
+Bind mounts share data between host and container while volume mounts are managed by Docker and are portable and persistent.
+
+$ docker run -v HOST/DIR:CONTAINER/DIR
+$ docker run -v NAMED-VOLUME:CONTAINER/DIR
+$ docker run --mount 'type=bind,src=<HOST/DIR>,dst=<CONTAINER-PATH>'
+$ docker run --mount 'type=volume,src=<VOLUME-NAME>,dst=<CONTAINER-PATH>'
