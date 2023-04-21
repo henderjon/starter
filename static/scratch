@@ -1,0 +1,10 @@
+npm init
+npm install --save-dev typescript
+npx tsc --init
+
+# Adjust config file, outDir, rootDir
+mkdir src
+mkdir public
+
+# watch mode
+npx tsc -w
