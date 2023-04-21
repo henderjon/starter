@@ -1,0 +1,5 @@
+
+#-- mkcert --#
+$ mkcert -install
+$ mkdir /tmp/crt && cd /tmp/crt
+$ mkcert local.example.com
