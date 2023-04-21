@@ -5,7 +5,7 @@ new projects and a place where I keep notes so I can find them later.
 
 ## static
 
-A simple web server written in Go so that browsers will execute JS locally.
+A simple web server written in Go so that browsers will execute JS locally and resources for SCSS and TS compilation.
 
 ## php
 
