@@ -1,0 +1,11 @@
+# node stuff
+static/node_modules/*
+static/package.json
+static/package-lock.json
+
+# compiled css
+static/public/css/*
+!static/public/css/.gitkeep
+
+# compiled js
+static/public/js/app.js
