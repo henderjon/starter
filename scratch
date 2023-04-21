@@ -1,0 +1,21 @@
+################################################################### composer ###
+
+$ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin/
+$ ln -s "$(which composer.phar)" "$HOME/bin/composer"
+
+################################################################# php set up ###
+
+### reqs: brew, composer, php, nginx, redis
+
+#-- PHP 7.4 --# https://github.com/shivammathur/homebrew-php
+$ brew tap shivammathur/php
+$ brew install shivammathur/php/php@7.4
+
+$ brew install libmemcached zlib
+$ pecl bundle memcached && cd ___ && phpize
+$ pecl install redis
+
+#-- mkcert --#
+$ mkcert -install
+$ mkdir /tmp/crt && cd /tmp/crt
+$ mkcert local.example.com
